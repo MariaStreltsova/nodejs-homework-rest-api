@@ -6,7 +6,7 @@ const { User } = require("../../models/users");
 const { RequestError } = require("../../utils");
 
 const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
     throw RequestError(409, "Email in use");
@@ -15,7 +15,6 @@ const register = async (req, res) => {
 
   const avatarUrl = gravatar.url(email);
   const result = await User.create({
-    name,
     email,
     password: hashPassword,
     avatarUrl,
